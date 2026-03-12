@@ -1,0 +1,4 @@
+sample: "barcode77"
+input_dir: "data"
+output_dir: "results"
+figures_dir: "figures"
