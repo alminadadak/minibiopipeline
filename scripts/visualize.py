@@ -36,6 +36,18 @@ def summary(df):
 			break
 	print(f"N50          : {n50:,} bp")
 
+	print("\n===== QUALITY THRESHOLDS =====")
+	for threshold in [5, 10, 15, 20]:
+		above = df[df['quality_mean'] >= threshold]
+		print(f">Q{threshold:<2}: {len(above):>6,} / {len(df):,} ({len(above)/len(df)*100:.1f}%)")
+
+	print("\n===== FILTERING IMPACT =====")
+	below_q10 = df[df['quality_mean'] < 10]
+	above_q10 = df[df['quality_mean'] >= 10]
+	print(f"Q10 below - median length: {below_q10['read_length'].median():.0f} bp  ({len(below_q10):,} reads)")
+	print(f"Q10 above - median length: {above_q10['read_length'].median():.0f} bp  ({len(above_q10):,} reads)")
+
+
 def plotDistributions(df, output_dir):
 	fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 	fig.suptitle('Barcode77 - Read Quality Control', fontsize=16)
